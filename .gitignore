@@ -1,4 +1,3 @@
-.*
 *.pyc
 *.egg-info
 *.orig
@@ -11,4 +10,3 @@ lib/*
 src/*
 simple_bcrypt.egg-info/*
 !.gitignore
-
