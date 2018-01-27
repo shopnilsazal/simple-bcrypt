@@ -2,6 +2,7 @@
 *.egg-info
 *.orig
 _build/*
+.idea/*
 bin/*
 build/*
 dist/*
