@@ -1,7 +1,7 @@
 # simple-bcrypt
 
-simple-bcrypt package provides bcrypt hashing utilities for
-`Flask/Sanic/Quart/Eve` application. Python 3.3+ is required to use this package.
+simple-bcrypt provides bcrypt hashing utilities for `Flask/Sanic/Quart/Eve` application.
+Python 3.3+ is required to use this package.
 
 Due to the recent increased prevelance of powerful hardware, such as modern
 GPUs, hashes have become increasingly easy to crack. A proactive solution to
@@ -57,6 +57,13 @@ object back to here. Do so like this:
 
     app = Eve()
     bcrypt = Bcrypt(app)
+
+
+#### Available Config with default
+
+    app.config['BCRYPT_LOG_ROUNDS'] = 6
+    app.config['BCRYPT_HASH_IDENT'] = '2b'
+    app.config['BCRYPT_HANDLE_LONG_PASSWORDS'] = False
 
 
 Two primary hashing methods are now exposed by way of the bcrypt object.
