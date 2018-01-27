@@ -1,0 +1,371 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>simple-bcrypt &#8212; simple-bcrypt 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-simple_bcrypt">
+<span id="simple-bcrypt"></span><h1>simple-bcrypt<a class="headerlink" href="#module-simple_bcrypt" title="Permalink to this headline">¶</a></h1>
+<p>simple-bcrypt package provides bcrypt hashing utilities for <cite>Flask/Sanic/Quart/Eve</cite> application.
+Python 3.3+ is required to use this package.</p>
+<p>Due to the recent increased prevelance of powerful hardware, such as modern
+GPUs, hashes have become increasingly easy to crack. A proactive solution to
+this is to use a hash that was designed to be “de-optimized”. Bcrypt is such
+a hashing facility; unlike hashing algorithms such as MD5 and SHA1, which are
+optimized for speed, bcrypt is intentionally structured to be slow.</p>
+<p>For sensitive data that must be protected, such as passwords, bcrypt is an
+advisable choice.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Install the extension with one of the following commands:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install simple-bcrypt
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You need Python Development Headers to install py-bcrypt package, needed
+as a dependency. If you are on Mac OS or Windows, you probably have it
+already installed. Otherwise look for python-dev package for Debian-based
+distributives and for python-devel package for RedHat-based.</p>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>To use the extension simply import the class wrapper and pass the <cite>Flask/Sanic/Quart/Eve</cite> app
+object back to here. Do so like this:</p>
+<p>Flask:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">from</span> <span class="nn">simple_bcrypt</span> <span class="kn">import</span> <span class="n">Bcrypt</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">bcrypt</span> <span class="o">=</span> <span class="n">Bcrypt</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Sanic:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sanic</span> <span class="kn">import</span> <span class="n">Sanic</span>
+<span class="kn">from</span> <span class="nn">simple_bcrypt</span> <span class="kn">import</span> <span class="n">Bcrypt</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Sanic</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">bcrypt</span> <span class="o">=</span> <span class="n">Bcrypt</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Quart:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">quart</span> <span class="kn">import</span> <span class="n">Quart</span>
+<span class="kn">from</span> <span class="nn">simple_bcrypt</span> <span class="kn">import</span> <span class="n">Bcrypt</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Quart</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">bcrypt</span> <span class="o">=</span> <span class="n">Bcrypt</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Eve:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">eve</span> <span class="kn">import</span> <span class="n">Eve</span>
+<span class="kn">from</span> <span class="nn">simple_bcrypt</span> <span class="kn">import</span> <span class="n">Bcrypt</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Eve</span><span class="p">()</span>
+<span class="n">bcrypt</span> <span class="o">=</span> <span class="n">Bcrypt</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Available Config with default:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;BCRYPT_LOG_ROUNDS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;BCRYPT_HASH_IDENT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;2b&#39;</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;BCRYPT_HANDLE_LONG_PASSWORDS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<p>Two primary hashing methods are now exposed by way of the bcrypt object. You need to use decode(‘utf-8’) on generate_password_hash(), like below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pw_hash</span> <span class="o">=</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">generate_password_hash</span><span class="p">(</span><span class="s1">&#39;hunter2&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="n">bcrypt</span><span class="o">.</span><span class="n">check_password_hash</span><span class="p">(</span><span class="n">pw_hash</span><span class="p">,</span> <span class="s1">&#39;hunter2&#39;</span><span class="p">)</span> <span class="c1"># returns True</span>
+</pre></div>
+</div>
+<div class="section" id="api">
+<h3>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="simple_bcrypt.Bcrypt">
+<em class="property">class </em><code class="descclassname">simple_bcrypt.</code><code class="descname">Bcrypt</code><span class="sig-paren">(</span><em>app=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simple_bcrypt.html#Bcrypt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simple_bcrypt.Bcrypt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bcrypt class container for password hashing and checking logic using
+bcrypt, of course. This class may be used to intialize your Flask/Sanic/Quart/Eve
+app object. The purpose is to provide a simple interface for password hashing utilities.</p>
+<p>Although such methods are not actually overriden, the API is intentionally 
+made similar so that existing applications which make use of the previous 
+hashing functions might be easily adapted to the stronger facility of 
+bcrypt.</p>
+<p>To get started you will wrap your application’s app object something like 
+this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">bcrypt</span> <span class="o">=</span> <span class="n">Bcrypt</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now the two primary utility methods are exposed via this object, <cite>bcrypt</cite>.
+So in the context of the application, important data, such as passwords, 
+could be hashed using this syntax:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;hunter2&#39;</span>
+<span class="n">pw_hash</span> <span class="o">=</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">generate_password_hash</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once hashed, the value is irreversible. However in the case of validating 
+logins a simple hashing of candidate password and subsequent comparison. 
+Importantly a comparison should be done in constant time. This helps 
+prevent timing attacks. A simple utility method is provided for this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">candidate</span> <span class="o">=</span> <span class="s1">&#39;secret&#39;</span>
+<span class="n">bcrypt</span><span class="o">.</span><span class="n">check_password_hash</span><span class="p">(</span><span class="n">pw_hash</span><span class="p">,</span> <span class="n">candidate</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If both the candidate and the existing password hash are a match 
+<cite>check_password_hash</cite> returns True. Otherwise, it returns False.</p>
+<div class="admonition-namespacing-issues admonition">
+<p class="first admonition-title">Namespacing Issues </p>
+<p>It’s worth noting that if you use the format, <cite>bcrypt = Bcrypt(app)</cite> 
+you are effectively overriding the bcrypt module. Though it’s unlikely 
+you would need to access the module outside of the scope of the 
+extension be aware that it’s overriden.</p>
+<p class="last">Alternatively consider using a different name, such as <cite>flask_bcrypt 
+= Bcrypt(app)</cite> to prevent naming collisions.</p>
+</div>
+<p>Additionally a configuration value for <cite>BCRYPT_LOG_ROUNDS</cite> may be set in 
+the configuration of the app. If none is provided this will
+internally be assigned to 12. (This value is used in determining the 
+complexity of the encryption, see bcrypt for more details.)</p>
+<p>You may also set the hash version using the <cite>BCRYPT_HASH_PREFIX</cite> field in
+the configuration of the app. If not set, this will default to <cite>2b</cite>.
+(See bcrypt for more details)</p>
+<p>By default, the bcrypt algorithm has a maximum password length of 72 bytes
+and ignores any bytes beyond that. A common workaround is to hash the
+given password using a cryptographic hash (such as <cite>sha256</cite>), take its
+hexdigest to prevent NULL byte problems, and hash the result with bcrypt.
+If the <cite>BCRYPT_HANDLE_LONG_PASSWORDS</cite> configuration value is set to <cite>True</cite>,
+the workaround described above will be enabled.
+<strong>Warning: do not enable this option on a project that is already using
+simple-bcrypt, or you will break password checking.</strong>
+<strong>Warning: if this option is enabled on an existing project, disabling it
+will break password checking.</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>app</strong> – The Flask/Sanic/Quart/Eve application object. Defaults to None.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="simple_bcrypt.Bcrypt.check_password_hash">
+<code class="descname">check_password_hash</code><span class="sig-paren">(</span><em>pw_hash</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simple_bcrypt.html#Bcrypt.check_password_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simple_bcrypt.Bcrypt.check_password_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests a password hash against a candidate password. The candidate
+password is first hashed and then subsequently compared in constant 
+time to the existing hash. This will either return <cite>True</cite> or <cite>False</cite>.</p>
+<p>Example usage of <a class="reference internal" href="#simple_bcrypt.check_password_hash" title="simple_bcrypt.check_password_hash"><code class="xref py py-class docutils literal"><span class="pre">check_password_hash</span></code></a> would look something 
+like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pw_hash</span> <span class="o">=</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">generate_password_hash</span><span class="p">(</span><span class="s1">&#39;secret&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">bcrypt</span><span class="o">.</span><span class="n">check_password_hash</span><span class="p">(</span><span class="n">pw_hash</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">)</span> <span class="c1"># returns True</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pw_hash</strong> – The hash to be compared against.</li>
+<li><strong>password</strong> – The password to compare.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simple_bcrypt.Bcrypt.generate_password_hash">
+<code class="descname">generate_password_hash</code><span class="sig-paren">(</span><em>password</em>, <em>rounds=None</em>, <em>prefix=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simple_bcrypt.html#Bcrypt.generate_password_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simple_bcrypt.Bcrypt.generate_password_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a password hash using bcrypt. Specifying <cite>rounds</cite>
+sets the log_rounds parameter of <cite>bcrypt.gensalt()</cite> which determines
+the complexity of the salt. 12 is the default value. Specifying <cite>prefix</cite>
+sets the <cite>prefix</cite> parameter of <cite>bcrypt.gensalt()</cite> which determines the 
+version of the algorithm used to create the hash.</p>
+<p>Example usage of <a class="reference internal" href="#simple_bcrypt.generate_password_hash" title="simple_bcrypt.generate_password_hash"><code class="xref py py-class docutils literal"><span class="pre">generate_password_hash</span></code></a> might look something 
+like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pw_hash</span> <span class="o">=</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">generate_password_hash</span><span class="p">(</span><span class="s1">&#39;secret&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>password</strong> – The password to be hashed.</li>
+<li><strong>rounds</strong> – The optional number of rounds.</li>
+<li><strong>prefix</strong> – The algorithm version to use.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simple_bcrypt.Bcrypt.init_app">
+<code class="descname">init_app</code><span class="sig-paren">(</span><em>app</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simple_bcrypt.html#Bcrypt.init_app"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simple_bcrypt.Bcrypt.init_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initalizes the application with the extension.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>app</strong> – The Flask/Sanic/Quart/Eve application object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="simple_bcrypt.generate_password_hash">
+<code class="descclassname">simple_bcrypt.</code><code class="descname">generate_password_hash</code><span class="sig-paren">(</span><em>password</em>, <em>rounds=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simple_bcrypt.html#generate_password_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simple_bcrypt.generate_password_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>This helper function wraps the eponymous method of <a class="reference internal" href="#simple_bcrypt.Bcrypt" title="simple_bcrypt.Bcrypt"><code class="xref py py-class docutils literal"><span class="pre">Bcrypt</span></code></a>. It
+is intended to be used as a helper function at the expense of the 
+configuration variable provided when passing back the app object. In other 
+words this shortcut does not make use of the app object at all.</p>
+<p>To this this function, simple import it from the module and use it in a 
+similar fashion as the method would be used. Here is a quick example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">simple_bcrypt</span> <span class="k">import</span> <span class="n">generate_password_hash</span>
+<span class="n">pw_hash</span> <span class="o">=</span> <span class="n">generate_password_hash</span><span class="p">(</span><span class="s1">&#39;hunter2&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>password</strong> – The password to be hashed.</li>
+<li><strong>rounds</strong> – The optional number of rounds.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simple_bcrypt.check_password_hash">
+<code class="descclassname">simple_bcrypt.</code><code class="descname">check_password_hash</code><span class="sig-paren">(</span><em>pw_hash</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simple_bcrypt.html#check_password_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simple_bcrypt.check_password_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>This helper function wraps the eponymous method of <code class="xref py py-class docutils literal"><span class="pre">Bcrypt.</span></code> It
+is intended to be used as a helper function at the expense of the 
+configuration variable provided when passing back the app object. In other 
+words this shortcut does not make use of the app object at all.</p>
+<p>To this this function, simple import it from the module and use it in a 
+similar fashion as the method would be used. Here is a quick example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">simple_bcrypt</span> <span class="k">import</span> <span class="n">check_password_hash</span>
+<span class="n">check_password_hash</span><span class="p">(</span><span class="n">pw_hash</span><span class="p">,</span> <span class="s1">&#39;hunter2&#39;</span><span class="p">)</span> <span class="c1"># returns True</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pw_hash</strong> – The hash to be compared against.</li>
+<li><strong>password</strong> – The password to compare.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">simple-bcrypt</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Rafiqul Hasan.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
